@@ -1,27 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block title %}
-    Accueil JOJ
+    Articles — JOJ News
 {% endblock title %}
-    
 
 {% block content %}
-    <h1>Bien venue dans la plateforme JOJ NEWS</h1>
-    <div>
-        <h3>Articles</h3>
-        
-        {% for a in article %}
+<section class="section" style="padding-top: 120px;">
+    <div class="container">
+        <div class="sec-header">
             <div>
-                <h4>{{a.titre}}</h4>
-                <a href="{% url 'detail' a.pk %}">lire L'article</a>
-                <p>{{a.contenu|truncatechars:10 }}</p> <!--remettre a 100 carateres -->
-                <span><em>{{a.date_publication}}</em></span>
-                
+                <div class="sec-kicker">Exploration</div>
+                <h2 class="sec-title">Tous les articles</h2>
             </div>
-            
-        {% endfor %}
-            
+        </div>
+
+        <div class="row g-4">
+            {% for a in article %}
+            <div class="col-md-6 col-lg-4">
+                <a href="{% url 'detail' a.pk %}" class="art-sm h-100 d-flex flex-column align-items-start shadow-sm" style="border-top: 3px solid var(--ocre);">
+                    <div class="art-sm-body w-100">
+                        <div class="art-cat-sm">{% if a.categorie %}{{ a.categorie.nom }}{% else %}Général{% endif %}</div>
+                        <h3 class="art-sm-title mb-3" style="font-size: 1.1rem;">{{ a.titre }}</h3>
+                        <p class="text-muted small mb-4" style="line-height: 1.4;">
+                            {{ a.contenu|truncatechars:100 }}
+                        </p>
+                        <div class="art-meta mt-auto pt-3 border-top w-100 d-flex justify-content-between">
+                            <span>{{ a.date_publication|date:"d M Y" }}</span>
+                            <span class="art-arrow">→</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="no-content">Aucun article n'a été publié pour le moment.</p>
+            </div>
+            {% endfor %}
+        </div>
     </div>
+</section>
 {% endblock content %}

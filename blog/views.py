@@ -10,17 +10,33 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+from django.db.models import Count
+
 def accueil(request):
-    return render(request, 'accueil.html')
+    categories = Categorie.objects.annotate(article_count=Count('article')).order_by('-article_count')[:5]
+    articles = Article.objects.order_by('-date_publication')[:6]
+    context = {
+        'categories': categories,
+        'articles': articles,
+    }
+    return render(request, 'accueil.html', context)
 
 # Create your views here.
 def articles(request) :
-    article = Article.objects.all()
+    categorie_id = request.GET.get('categorie')
+    current_category = None
+    
+    if categorie_id:
+        article_list = Article.objects.filter(categorie_id=categorie_id).order_by('-date_publication')
+        current_category = get_object_or_404(Categorie, id=categorie_id)
+    else:
+        article_list = Article.objects.all().order_by('-date_publication')
+
     context = {
-        'article' : article
+        'article' : article_list,
+        'current_category': current_category
     }
     return render(request,'article.html',context)
-
 
 def categorie(request):
     categories = Categorie.objects.all()
@@ -104,13 +120,13 @@ def connexion(request):
         if request.user.is_authenticated:
             return redirect('accueil')
 
-        email = request.POST['email']
-        mot_de_passe = request.POST['mot_de_passe']
+        email = request.POST.get('email')
+        mot_de_passe = request.POST.get('mot_de_passe')
 
         user = authenticate(request, username=email, password=mot_de_passe)
 
         if user is not None:
             login(request, user)
-            return redirect('inscription')
+            return redirect('accueil')
 
     return render(request, 'connexion.html')

@@ -1,7 +1,22 @@
-<h2>Supprimer commentaire</h2>
+{% extends 'base.html' %}
 
-<form method="post">
-    {% csrf_token %}
-    <p>Confirmer la suppression ?</p>
-    <button type="submit">Supprimer</button>
-</form>
+{% block content %}
+<section class="section" style="padding-top: 150px; min-height: 80vh;">
+    <div class="container d-flex justify-content-center">
+        <div class="card shadow-sm border-0 p-4 text-center" style="max-width: 500px; width: 100%; border-radius: 16px; background: white;">
+            <div class="mb-3">
+                <div class="sec-kicker" style="color: var(--sienna);">Action irréversible</div>
+                <h2 class="sec-title" style="font-size: 1.4rem;">Supprimer le commentaire ?</h2>
+            </div>
+            
+            <p class="text-muted mb-4">Êtes-vous sûr de vouloir supprimer définitivement ce commentaire ? Cette action ne peut pas être annulée.</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn-primary w-100 mb-2" style="background: var(--sienna); color: white;">Confirmer la suppression</button>
+                <a href="{{ request.META.HTTP_REFERER }}" class="btn-ghost d-block w-100" style="color: var(--navy); border-color: var(--slate);">Garder le commentaire</a>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

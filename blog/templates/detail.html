@@ -1,45 +1,112 @@
 {% extends 'base.html' %}
 
-
 {% block title %}
-    article : {{article.titre}}
+    {{ article.titre }} — JOJ News
 {% endblock title %}
 
-
 {% block content %}
-    <div>
-        <h4>{{article.titre}}</h4>
-        <p>{{article.contenu}}</p>
-        <span>{{article.date_publication}}</span>
-        
-    </div>
-    <hr>
-
-    <h3>Commentaires</h3>
-
-    {% for commentaire in commentaires %}
-        <div>
-            <strong>{{ commentaire.auteur }}  </strong>
-            <span><em> ~{{ commentaire.date_coms }}</em></span>
-            <p>{{ commentaire.contenu }}</p>
-
-            {% if user == commentaire.auteur %}
-                <a href="{% url 'modifier_commentaire' commentaire.id %}">Modifier</a>
-                <a href="{% url 'supprimer_commentaire' commentaire.id %}">Supprimer</a>
-            {% endif %}
+<article class="article-detail" style="padding-top: 120px;">
+    <!-- Header de l'article -->
+    <header class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 text-center">
+                <div class="sec-kicker mb-3">{% if article.categorie %}{{ article.categorie.nom }}{% else %}Actualité{% endif %}</div>
+                <h1 class="display-4 fw-800 mb-4" style="font-family: 'Syne', sans-serif; color: var(--navy);">{{ article.titre }}</h1>
+                <div class="d-flex align-items-center justify-content-center gap-3 text-muted small">
+                    <span class="fw-bold text-dark">JOJ News Team</span>
+                    <span class="opacity-50">•</span>
+                    <span>Publié le {{ article.date_publication|date:"d F Y" }}</span>
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </header>
 
-    <hr>
+    <!-- Contenu de l'article -->
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="article-content fs-5" style="line-height: 1.8; color: #334155;">
+                    {{ article.contenu|linebreaks }}
+                </div>
+                
+                <div class="mt-5 pt-4 border-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="sec-title m-0">Commentaires ({{ commentaires.count }})</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {% if user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Ajouter un commentaire</button>
-        </form>
-    {% else %}
-        <p>Connectez-vous pour commenter</p>
-    {% endif %}
-{% endblock content %}
+    <!-- Section Commentaires -->
+    <section class="bg-white py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    {% for commentaire in commentaires %}
+                    <div class="comment-card mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold" style="color: var(--navy);">{{ commentaire.auteur.get_full_name|default:commentaire.auteur.username }}</span>
+                            <span class="text-muted extra-small">{{ commentaire.date_coms|timesince }}</span>
+                        </div>
+                        <p class="mb-3" style="color: #475569;">{{ commentaire.contenu }}</p>
+                        
+                        {% if user == commentaire.auteur %}
+                        <div class="d-flex gap-3">
+                            <a href="{% url 'modifier_commentaire' commentaire.id %}" class="text-decoration-none small text-warning">Modifier</a>
+                            <a href="{% url 'supprimer_commentaire' commentaire.id %}" class="text-decoration-none small text-danger">Supprimer</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p class="text-center text-muted py-4">Aucun commentaire pour le moment. Soyez le premier à réagir !</p>
+                    {% endfor %}
+
+                    <!-- Formulaire -->
+                    <div class="mt-5 p-4 rounded-4" style="background: var(--sand);">
+                        <h4 class="mb-4" style="font-family: 'Syne';">Laisser un avis</h4>
+                        {% if user.is_authenticated %}
+                        <form method="post" class="comment-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                {{ form.contenu }}
+                            </div>
+                            <button type="submit" class="btn-primary-electric w-100 py-3">Envoyer mon commentaire</button>
+                        </form>
+                        {% else %}
+                        <div class="text-center py-3">
+                            <p class="mb-3">Vous devez être connecté pour participer à la discussion.</p>
+                            <a href="{% url 'connexion' %}" class="btn-outline-glass" style="color: var(--navy); border-color: var(--navy);">Se connecter</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>
+
+<style>
+    .extra-small { font-size: 0.7rem; }
+    .comment-card {
+        padding: 1.5rem;
+        border-bottom: 1px solid #f1f5f9;
+        transition: background 0.2s;
+    }
+    .comment-card:hover { background: #f8fafc; }
     
+    .comment-form textarea {
+        width: 100%;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 1rem;
+        min-height: 120px;
+        transition: border-color 0.2s;
+    }
+    .comment-form textarea:focus {
+        outline: none;
+        border-color: var(--ocre);
+    }
+    .fw-800 { font-weight: 800; }
+</style>
+{% endblock content %}
