@@ -1,28 +1,145 @@
 {% extends 'base.html' %}
-{% load static %}
-
-
-{% block title %}
-    Accueil JOJ
-{% endblock title %}
-    
 
 {% block content %}
-    <h1>Bien venue dans la plateforme JOJ NEWS</h1>
-    <div>
-        <h3>Articles</h3>
-        
-        {% for a in article %}
-            <div>
-                <h4>{{a.titre}}</h4>
-                <a href="{% url 'detail' a.pk %}">lire L'article</a>
-                <p>{{a.contenu|truncatechars:10 }}</p> <!--remettre a 100 carateres -->
-                <span><em>{{a.date_publication}}</em></span>
-                
-            </div>
-            
-        {% endfor %}
-            
-    </div>
-{% endblock content %}
+
+<!-- HERO IMMERSIF & MODERNE -->
+ <br>
+<section class="hero">
     
+  <div class="hero-bg">
+    <!-- vidéo abstraite dynamique (ou fallback image) -->
+    <video class="hero-bg-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format">
+      <source src="https://player.vimeo.com/external/434045209.sd.mp4?s=20c86e2034ba37e5e14b4e3fa4ed740d0eac1dfe&profile_id=164" type="video/mp4">
+      <!-- fallback image sport -->
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">DAKAR 2026 · PREMIÈRE ÉDITION AFRICAINE</div>
+      <h1 class="hero-title">
+        <span class="gradient-text">L'avenir du sport</span><br>
+        commence <span class="accent-electric">ici.</span>
+      </h1>
+      <p class="hero-description">
+        Suivez l'épopée des Jeux Olympiques de la Jeunesse à Dakar. Résultats, portraits d'athlètes et moments d'exception — l'actualité officielle.
+      </p>
+      <div class="hero-actions">
+        <a href="#categories" class="btn-large btn-large-primary">Explorer les sports →</a>
+        <a href="#articles" class="btn-large btn-large-outline">Dernières actus</a>
+      </div>
+      <div class="countdown-wrapper">
+        <div class="countdown-item">
+          <span class="countdown-number" id="cd-days">00</span>
+          <span class="countdown-label">J</span>
+        </div>
+        <span class="text-white-50">:</span>
+        <div class="countdown-item">
+          <span class="countdown-number" id="cd-hours">00</span>
+          <span class="countdown-label">H</span>
+        </div>
+        <span class="text-white-50">:</span>
+        <div class="countdown-item">
+          <span class="countdown-number" id="cd-mins">00</span>
+          <span class="countdown-label">M</span>
+        </div>
+        <span class="text-white-50">:</span>
+        <div class="countdown-item">
+          <span class="countdown-number" id="cd-secs">00</span>
+          <span class="countdown-label">S</span>
+        </div>
+        <span class="ms-2 text-white-50" style="font-size:0.7rem;">avant la cérémonie</span>
+      </div>
+      <div class="hero-stat">
+        <div><span class="hero-stat-number">206</span> nations</div>
+        <div><span class="hero-stat-number">+4000</span> jeunes athlètes</div>
+        <div><span class="hero-stat-number">35</span> disciplines</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION CATÉGORIES (liste pure) -->
+<section class="section" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-sub">#SPORTS & DISCIPLINES</div>
+      <h2 class="section-title">Catégories officielles</h2>
+      <p style="color:var(--text-muted); max-width: 500px; margin: 0.5rem auto 0;">Retrouvez toutes nos actualités par sport</p>
+    </div>
+    <div class="category-grid">
+        {% for c in categories %}
+            <a href="#" class="category-card">
+                <!-- <span class="category-icon">🏃‍♂️</span> -->
+                <span class="category-name">{{c.nom}}</span>
+                <span class="category-count">28 articles</span>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="view-all">
+      <a href="{% url 'categorie' %}" class="link-underline">Toutes les catégories →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION ARTICLES (liste récents) -->
+<section class="section" id="articles" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-sub">RÉCENTS & EXCLUSIFS</div>
+      <h2 class="section-title">À ne pas manquer</h2>
+      <p style="color:var(--text-muted);">Plongez dans les dernières actualités des JOJ</p>
+    </div>
+    <div class="articles-list">
+      <!-- article 1 -->
+      <a href="#" class="article-item">
+        <div class="article-info">
+          <div class="article-category">Natation · performance</div>
+          <div class="article-title">Lamina Sow pulvérise le record des JOJ sur 200m nage libre</div>
+          <div class="article-meta">7 avril 2026 · Par A. Diouf · 3 min de lecture</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </a>
+      <!-- article 2 -->
+      <a href="#" class="article-item">
+        <div class="article-info">
+          <div class="article-category">Basket 3x3 · Exploit</div>
+          <div class="article-title">Le Sénégal domine l'Australie et se qualifie en demi-finale</div>
+          <div class="article-meta">6 avril 2026 · Par M. Diallo · 2 min</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </a>
+      <!-- article 3 -->
+      <a href="#" class="article-item">
+        <div class="article-info">
+          <div class="article-category">Athlétisme · Finale</div>
+          <div class="article-title">100m hommes : Les favoris dévoilés avant la finale de ce soir</div>
+          <div class="article-meta">5 avril 2026 · Par S. Kane · 4 min</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </a>
+      <!-- article 4 -->
+      <a href="#" class="article-item">
+        <div class="article-info">
+          <div class="article-category">Judo · Médaille</div>
+          <div class="article-title">L'argent pour la France en -66kg : une finale d'anthologie</div>
+          <div class="article-meta">5 avril 2026 · Par L. Bernard · 2 min</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </a>
+      <!-- article 5 -->
+      <a href="#" class="article-item">
+        <div class="article-info">
+          <div class="article-category">Breaking · Nouveauté olympique</div>
+          <div class="article-title">Les battles de breaking électrisent le public de Dakar</div>
+          <div class="article-meta">4 avril 2026 · Par F. Ndiaye · 3 min</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </a>
+    </div>
+    <div class="view-all">
+      <a href="#" class="link-underline">Voir tous les articles →</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

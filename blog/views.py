@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
 from blog.forms import CommentaireForm, InscriptionForm
-from blog.models import Article, Commentaire
+from blog.models import Article, Commentaire, Categorie
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic import UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -10,13 +10,24 @@ from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+def accueil(request):
+    return render(request, 'accueil.html')
+
 # Create your views here.
-def accueil(request) :
+def articles(request) :
     article = Article.objects.all()
     context = {
         'article' : article
     }
-    return render(request,'accueil.html',context)
+    return render(request,'article.html',context)
+
+
+def categorie(request):
+    categories = Categorie.objects.all()
+    context = {
+        'categories' : categories
+    }
+    return render(request,'categorie.html',context)
 
 def detail(request, pk):
     article = get_object_or_404(Article, pk=pk)

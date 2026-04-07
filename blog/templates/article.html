@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Accueil JOJ
+{% endblock title %}
+    
+
+{% block content %}
+    <h1>Bien venue dans la plateforme JOJ NEWS</h1>
+    <div>
+        <h3>Articles</h3>
+        
+        {% for a in article %}
+            <div>
+                <h4>{{a.titre}}</h4>
+                <a href="{% url 'detail' a.pk %}">lire L'article</a>
+                <p>{{a.contenu|truncatechars:10 }}</p> <!--remettre a 100 carateres -->
+                <span><em>{{a.date_publication}}</em></span>
+                
+            </div>
+            
+        {% endfor %}
+            
+    </div>
+{% endblock content %}
