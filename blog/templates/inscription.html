@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="prenom" class="form-label">PRENOM</label>
+            {{form.prenom}}
+        </div>
+        <div class="mb-3">
+            <label for="nom" class="form-label">NOM</label>
+            {{form.nom}}
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            {{form.email}}
+        </div>
+        <div class="mb-3">
+            <label for="mot_de_passe" class="form-label">MOT DE PASSE</label>
+            {{form.mot_de_passe}}
+        </div>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </form>
+    
+    
+</body>
+</html>

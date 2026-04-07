@@ -29,3 +29,21 @@ class Commentaire(models.Model) :
 
     def __str__(self):
         return f"{self.auteur} - {self.article}"
+
+
+class Inscription(models.Model):
+    nom = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=100)
+    email = models.EmailField()
+    mot_de_passe = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.nom}"
+    
+
+# class Connexion(models.Model):
+#     email = models.EmailField()
+#     mot_de_passe = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return f"{self.email}"
