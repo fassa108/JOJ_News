@@ -103,8 +103,8 @@ def inscription(request):
         form = InscriptionForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
-                first_name=form.cleaned_data['nom'],
-                last_name=form.cleaned_data['prenom'],
+                first_name=form.cleaned_data['prenom'],
+                last_name=form.cleaned_data['nom'],
                 username=form.cleaned_data['email'],
                 email=form.cleaned_data['email'],
                 password=form.cleaned_data['mot_de_passe']

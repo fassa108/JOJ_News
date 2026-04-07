@@ -13,25 +13,27 @@
             
             <form method="post">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label small fw-bold text-muted">Prénom</label>
-                        {{ form.prenom }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label small fw-bold text-muted">Nom</label>
-                        {{ form.nom }}
+                <div class="mb-3">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted">Prénom</label>
+                            {{ form.prenom }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted">Nom de famille</label>
+                            {{ form.nom }}
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label small fw-bold text-muted">Email</label>
+                    <label class="form-label small fw-bold text-muted">Adresse Email</label>
                     {{ form.email }}
                 </div>
                 <div class="mb-4">
-                    <label class="form-label small fw-bold text-muted">Mot de passe</label>
+                    <label class="form-label small fw-bold text-muted">Définir un mot de passe</label>
                     {{ form.mot_de_passe }}
                 </div>
-                <button type="submit" class="btn-primary-electric w-100 py-2 border-0 mb-3">S'inscrire</button>
+                <button type="submit" class="btn-primary-electric w-100 py-3 border-0 mb-3" style="font-size: 0.9rem;">Créer mon compte</button>
                 <div class="text-center">
                     <span class="small text-muted">Déjà un compte ? <a href="{% url 'connexion' %}" class="text-decoration-none" style="color: var(--ocre);">Se connecter</a></span>
                 </div>
@@ -39,4 +41,24 @@
         </div>
     </div>
 </section>
+
+<style>
+    /* Style appliqué aux inputs générés dynamiquement par Django */
+    form input {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        border: 1px solid rgba(26,39,68,0.1);
+        border-radius: 12px;
+        background-color: #fcfcfc;
+        transition: all 0.2s ease;
+    }
+    form input:focus {
+        outline: none;
+        border-color: var(--ocre);
+        background-color: #fff;
+        box-shadow: 0 0 0 4px rgba(196, 145, 58, 0.05);
+    }
+</style>
 {% endblock %}
