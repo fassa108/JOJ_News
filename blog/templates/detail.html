@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    article : {{article.titre}}
+{% endblock title %}
+
+
+{% block content %}
+    <div>
+        <h4>{{article.titre}}</h4>
+        <p>{{article.contenu}}</p>
+        <span>{{article.date_publication}}</span>
+        
+    </div>
+{% endblock content %}
+    
