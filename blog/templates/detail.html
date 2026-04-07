@@ -13,5 +13,33 @@
         <span>{{article.date_publication}}</span>
         
     </div>
+    <hr>
+
+    <h3>Commentaires</h3>
+
+    {% for commentaire in commentaires %}
+        <div>
+            <strong>{{ commentaire.auteur }}  </strong>
+            <span><em> ~{{ commentaire.date_coms }}</em></span>
+            <p>{{ commentaire.contenu }}</p>
+
+            {% if user == commentaire.auteur %}
+                <a href="{% url 'modifier_commentaire' commentaire.id %}">Modifier</a>
+                <a href="{% url 'supprimer_commentaire' commentaire.id %}">Supprimer</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <hr>
+
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Ajouter un commentaire</button>
+        </form>
+    {% else %}
+        <p>Connectez-vous pour commenter</p>
+    {% endif %}
 {% endblock content %}
     

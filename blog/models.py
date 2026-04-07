@@ -1,5 +1,6 @@
 from django import forms
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Categorie(models.Model) :
@@ -15,3 +16,16 @@ class Article(models.Model) :
     contenu = models.TextField()
     categorie = models.ForeignKey(Categorie, on_delete = models.SET_NULL, null = True, blank=True)
     date_publication = models.DateTimeField(auto_now_add=True)
+
+
+
+
+class Commentaire(models.Model) :
+
+    contenu = models.TextField()
+    date_coms = models.DateTimeField(auto_now_add=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    auteur = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.auteur} - {self.article}"

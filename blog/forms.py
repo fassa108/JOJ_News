@@ -2,7 +2,7 @@
 
 from django import forms
 
-from .models import Categorie, Article
+from .models import Categorie, Article, Commentaire
 
 
 class CategorieForm(forms.ModelForm):
@@ -19,3 +19,12 @@ class ArticleForm(forms.ModelForm) :
     class Meta :
         model = Article
         fields = ['titre','contenu','categorie']
+
+
+class CommentaireForm(forms.ModelForm):
+    class Meta:
+        model = Commentaire
+        fields = ['contenu']
+
+    
+
