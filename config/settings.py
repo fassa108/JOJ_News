@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,7 +127,19 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = [
     BASE_DIR / 'media'
 ]
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sambndeyefassa@gmail.com'
+EMAIL_HOST_PASSWORD =  os.getenv('PASSWORD')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+

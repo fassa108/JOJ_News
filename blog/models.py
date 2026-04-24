@@ -17,6 +17,9 @@ class Article(models.Model) :
     categorie = models.ForeignKey(Categorie, on_delete = models.SET_NULL, null = True, blank=True)
     date_publication = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.titre}'
+
 
 
 

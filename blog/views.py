@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.mail import send_mail
 
 from blog.forms import CommentaireForm, InscriptionForm
 from blog.models import Article, Commentaire, Categorie
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic import UpdateView, DeleteView
 from django.urls import reverse_lazy
+
 from django.shortcuts import redirect
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -20,6 +22,10 @@ def accueil(request):
         'articles': articles,
     }
     return render(request, 'accueil.html', context)
+
+
+
+
 
 # Create your views here.
 def articles(request) :
@@ -57,6 +63,11 @@ def detail(request, pk):
                 commentaire.article = article
                 commentaire.auteur = request.user
                 commentaire.save()
+                titre = commentaire.article
+                auteur = commentaire.auteur
+                message = commentaire = commentaire.contenu
+                message = f"Nouveau commentaire sur l'article {titre} | utilisateur : {auteur}"
+                send_mail(titre, message, 'sambndeyefassa@gmail.com',['sambndeyefassa@gmail.com','alphonsedesirehaba17@gmail.com'])
                 return redirect('detail', pk=article.pk)
     else:
         form = CommentaireForm()
